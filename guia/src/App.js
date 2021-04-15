@@ -10,12 +10,17 @@ function nameRepeat(persons, name){
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '040-1234567' }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('0')
 
-  const handleChange = ({target}) => {
+
+  const handleChangeName = ({target}) => {
     setNewName(target.value)
+  }
+  const handleChangeNumber = ({target}) => {
+    setNewNumber(target.value)
   }
 
   const handleSubmit = (e) => {
@@ -23,8 +28,9 @@ const App = () => {
     if(nameRepeat(persons, newName)){
       window.alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons([...persons, {name: newName}])
+      setPersons([...persons, {name: newName, number: newNumber}])
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -33,7 +39,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input value={newName} onChange={handleChange} />
+          name: <input value={newName} onChange={handleChangeName} />
+          number: <input value={newNumber} onChange={handleChangeNumber} />
         </div>
         <div>
           <button type="submit">add</button>
@@ -42,7 +49,9 @@ const App = () => {
       <h2>Numbers</h2>
       {persons.map(person => {
         return(
-          <h4 key={person.name}>{person.name}</h4>
+          <div key={person.name}>
+            <h4>{person.name} {person.number}</h4>
+          </div>
         )
       })}
     </div>
