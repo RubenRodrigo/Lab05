@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Filter } from './components/Filter'
+import { Persons } from './components/Persons'
+import { PersonForm } from './components/PersonForm'
 
 function nameRepeat(persons, name){
   const found = persons.find(person => person.name === name)
@@ -52,38 +55,22 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with: <input value={filter} onChange={handleChangeFilter} />
-      </div>
-      <form onSubmit={handleSubmit}>
+      <Filter filter={filter} onChange={handleChangeFilter} />
       <h2>Add a new</h2>
-        <div>
-          name: <input value={newName} onChange={handleChangeName} />
-          number: <input value={newNumber} onChange={handleChangeNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm 
+        handleSubmit={handleSubmit}
+        newName={newName}
+        handleChangeName={handleChangeName} 
+        newNumber={newNumber}
+        handleChangeNumber={handleChangeNumber}
+      />
       <h2>Numbers</h2>
       {
         filter.length > 0
         ?
-        newPersons.map(person => {
-          return(
-            <div key={person.name}>
-              <h4>{person.name} {person.number}</h4>
-            </div>
-          )
-        })
+        <Persons persons={newPersons} />  
         :
-        persons.map(person => {
-          return(
-            <div key={person.name}>
-              <h4>{person.name} {person.number}</h4>
-            </div>
-          )
-        })
+        <Persons persons={persons} />
       }
     </div>
   )
