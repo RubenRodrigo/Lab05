@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
 
+function nameRepeat(persons, name){
+  const found = persons.find(person => person.name == name)
+  if (found) {
+    return true
+  }
+  return false
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas' }
@@ -12,10 +20,14 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setPersons([...persons, {name: newName}])
-    setNewName('')
+    if(nameRepeat(persons, newName)){
+      window.alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons([...persons, {name: newName}])
+      setNewName('')
+    }
   }
-  
+
   return (
     <div>
       <h2>Phonebook</h2>
